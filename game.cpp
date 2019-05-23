@@ -1,69 +1,73 @@
+#include "game.h"
 #include <iostream>
-#include <Windows.h>
+#include <chrono>
+#include <thread>
+#include <stdlib.h>
 
-int gameArray[5][5];
-bool GameRunning = false;
-
-
-
-void clearArray(){
-    for(int i = 0; i < 5; i++){
-        for(int j = 0; j < 5; j++){
-            gameArray[i][j] = 0;
-        }
-    }
-}
-void printArray(){
-    std::cout << "-------------------------------" << std::endl;
-    for(int i = 0; i < 5; i++){
-        for(int j = 0; j < 5; j++){
-            if(j == 4){
-                std::cout << " " << gameArray[i][j] << std::endl;
-            }else{
-                std::cout << " " << gameArray[i][j] << " ";
-            }
-        }
-     }
-    std::cout << "-------------------------------" << std::endl;
+Game::Game() {
+	system("cls");
+	printAsSpeech("Welcome to EXTREME Fishing Simulator 2019! 8-)");
+	printAsCommand("Please enter your name as a string.");
+	std::cin >> playername;
+	printAsSpeech("Hello there, " + playername + "!");
+	getInput();
 }
 
-void PlacePlant(){
-    int x;
-    int y;
-
-    std::cout << "X Position: ";
-    std::cin >> x;
-    std::cout << "Y Position: ";
-    std::cin >> y;
-
-    gameArray[y][x] = 7;
-
-}
-void RandomZombieSpawn(){
-    int spawn = rand() % 5;
-
-    gameArray[spawn][0] = 5;
+void Game::printAsSpeech(std::string text_input) {
+	std::cout << std::endl << ".";
+	//std::this_thread::sleep_for(std::chrono::milliseconds(300));
+	std::cout << ".";
+	//std::this_thread::sleep_for(std::chrono::milliseconds(300));
+	std::cout << ".";
+	//std::this_thread::sleep_for(std::chrono::milliseconds(300));
+	//std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+	std::cout << text_input << std::endl;
 }
 
-void game(){
-    GameRunning = true;
-    clearArray();
-    printArray();
+void Game::printAsCommand(std::string text_input) {
+	std::cout << "!! " + text_input + " !!" << std::endl;
+}
 
-    int CinCommand;
-    std::cin >> CinCommand;
-    
-    if(CinCommand == 0){
-        return;
-    }else if(CinCommand == 1){
-        PlacePlant();
-    }
-    while(GameRunning = true){
+void Game::getInput() {
 
-        if(GetKeyState(VK_TAB) & 0x09){
-            GameRunning = false;
-        }
-        printArray();
-    }
-    
+	valid = false;
+	exit = false;
+	const char* subheading = "";
+	do {
+		do {
+			system("cls");
+			puts("\n\n\t\t      \":\"");
+			puts("\t\t    ___:____     |\"\\/\"|");
+			puts("\t\t  ,'        `.    \\  /");
+			puts("\t\t  |  O        \\___/  |");
+			puts("\t\t~^~^~^~^~^~^~^~^~^~^~^~^~\n\a");
+			puts("\t You are on the EXTREME jetty!");
+			puts("Hit ENTER to farm. Enter s to see stats or enter e to exit.");
+			puts(subheading);
+			getline(std::cin, input);
+
+			if(input == "s") {
+				valid = true;
+				subheading = "Your stats are good.";
+				// Get player stats
+			} else
+			if (input == "e") {
+				valid = true;
+				exit=true;
+			} else
+			if (input == "") {
+				valid = true;
+				subheading = "1 wood farmed!";
+			} else
+			{
+				valid = false;
+				subheading = "Invalid input.";
+			}
+
+		} while (!valid);
+	} while (!exit);
+}
+
+Game::~Game() {
+
 }
