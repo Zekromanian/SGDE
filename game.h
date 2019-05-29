@@ -9,10 +9,13 @@ class Game {
     bool valid; //Is text input valid
     std::string playername;
   public:
-    Game(); // Create new game instance.
+    //Constructor
+    Game();
+    //Actions
     void printAsSpeech(std::string text_input); // Spits out text in a digestible format.
     void printAsCommand(std::string text_input); //Spits out text as a call to action.
-    void getInput(); // Input handler
+    void getInput(int type); // Input handler Type 0 - Fish, Type 1 - Encounter
+    //Destructor
     ~Game();
 };
 

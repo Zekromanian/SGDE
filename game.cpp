@@ -1,69 +1,94 @@
 #include "game.h"
-#include <iostream>
+#include "entity.h"
 #include <chrono>
 #include <thread>
 #include <stdlib.h>
 
 Game::Game() {
+
+	// Intro
 	system("cls");
-	printAsSpeech("Welcome to EXTREME Fishing Simulator 2019! 8-)");
+	printAsSpeech("Welcome to Extreme Fishing Simulator 2019");
 	printAsCommand("Please enter your name as a string.");
-	std::cin >> playername;
-	printAsSpeech("Hello there, " + playername + "!");
-	getInput();
+
+	// Declaration of person entity
+	Entity user(10,"Player",1);
+	getline(std::cin, playername);
+	user.set_name(playername);
+	printAsSpeech(user.get_name());
+	getInput(0);
+	//couldn't figure out how to do this with pointers
 }
 
+// this was gonna type bit by bit if time worked but ceebs
 void Game::printAsSpeech(std::string text_input) {
-	std::cout << std::endl << ".";
+	std::cout << std::endl << "\t";
 	//std::this_thread::sleep_for(std::chrono::milliseconds(300));
-	std::cout << ".";
+	//std::cout << ".";
 	//std::this_thread::sleep_for(std::chrono::milliseconds(300));
-	std::cout << ".";
+	//std::cout << ".";
 	//std::this_thread::sleep_for(std::chrono::milliseconds(300));
 	//std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 	std::cout << text_input << std::endl;
 }
 
+// For important looking messages
 void Game::printAsCommand(std::string text_input) {
-	std::cout << "!! " + text_input + " !!" << std::endl;
+	std::cout << "\t>> " + text_input + " <<" << std::endl;
 }
 
-void Game::getInput() {
+void Game::getInput(int type) {
+
+	//Different input menus for types.
+	// Type 0 is fishing/default
+	// - can fish or pay fish to enter Battle
+	// - will show Player stats
+
+	//Type 1 is Battle encounter screen
+	// - can use commands to do attacks
+	// - can pay fish to forfeit or can win/lose and die/survive
 
 	valid = false;
 	exit = false;
 	const char* subheading = "";
 	do {
 		do {
-			system("cls");
-			puts("\n\n\t\t      \":\"");
-			puts("\t\t    ___:____     |\"\\/\"|");
-			puts("\t\t  ,'        `.    \\  /");
-			puts("\t\t  |  O        \\___/  |");
-			puts("\t\t~^~^~^~^~^~^~^~^~^~^~^~^~\n\a");
-			puts("\t You are on the EXTREME jetty!");
-			puts("Hit ENTER to farm. Enter s to see stats or enter e to exit.");
-			puts(subheading);
-			getline(std::cin, input);
 
-			if(input == "s") {
-				valid = true;
-				subheading = "Your stats are good.";
-				// Get player stats
-			} else
-			if (input == "e") {
-				valid = true;
-				exit=true;
-			} else
-			if (input == "") {
-				valid = true;
-				subheading = "1 wood farmed!";
-			} else
-			{
-				valid = false;
-				subheading = "Invalid input.";
+			// Code to do if input type is 0 (fishing)
+			if(type == 0) {
+				system("cls");
+				printAsSpeech("You are on the jetty.\n");
+				puts("\n\t\t      \":\"");
+				puts("\t\t    ___:____     |\"\\/\"|");
+				puts("\t\t  ,'        `.    \\  /");
+				puts("\t\t  |  O        \\___/  |");
+				puts("\t\t~^~^~^~^~^~^~^~^~^~^~^~^~\n");
+				printAsCommand("ENTER = cast your fishing line.");
+				printAsCommand("b = Battle a ocean monster ");
+				printAsCommand("e = Exit game");
+				puts(subheading);
+				getline(std::cin, input);
+
+				if(input == "s") {
+					valid = true;
+					subheading = "Your stats are good.";
+					// Get player stats
+				} else
+				if (input == "e") {
+					valid = true;
+					exit=true;
+				} else
+				if (input == "") {
+					valid = true;
+					subheading = "1 fish caught!";
+				} else
+				{
+					valid = false;
+					subheading = "Invalid input.";
+				}
+			} else (if type==1) {
+				// Code to do if player is in a battle encounter
 			}
-
 		} while (!valid);
 	} while (!exit);
 }

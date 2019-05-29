@@ -1,13 +1,21 @@
+#ifndef PLAYER_H
+#define PLAYER_H
 
+#include "entity.h"
 
-class Player{
+class Player : public Entity {
+	private:
+		int fish;
+		int max_health;
+		int risk;
 	public:
-		string PName;
-		int health;
-
-		player();
-		player(string name);
-		playerHealthCheck();
-		playerHealthSet();
-
+		//Constructors
+		Player();
+		//Actions
+		void do_fish();
+		void do_battle();
+		//Destructor
+		~Player();
 };
+
+#endif

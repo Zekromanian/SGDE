@@ -1,26 +1,19 @@
-#include <string>
+#include "player.h"
 
-#include <string>
-
-
-player::player(){
-	PName = "Null";
-	Health = 100;
+Player::Player() : Entity() {
+  int fish = 0;
+  int max_health=(strength*10);
+  int risk = 0;
 }
 
-player::player(string inputName){
-	PName = inputName;
-	Health = 100;
+void Player::do_battle() {
+
 }
 
-player::playerHealthCheck(){
-	return Health;
+void Player::do_fish() {
+
 }
 
-player::playerHealthMinus(int number){
-	Health = Health - number;
-}
+Player::~Player() {
 
-player::playerHealthAdd(int number){
-	Health = Health + number;
 }
