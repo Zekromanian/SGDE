@@ -1,5 +1,7 @@
 #include "game.h"
 #include "entity.h"
+#include "player.h"
+#include "RollDice.cpp"
 #include <chrono>
 #include <thread>
 #include <stdlib.h>
@@ -12,11 +14,11 @@ Game::Game() {
 	printAsCommand("Please enter your name as a string.");
 
 	// Declaration of person entity
-	Entity user(10,"Player",1);
+	Player player(10,"Player",1);
 	getline(std::cin, playername);
-	user.set_name(playername);
-	printAsSpeech(user.get_name());
-	getInput(0);
+	player.set_name(playername);
+	printAsSpeech(player.get_name());
+	getInput(0,player);
 	//couldn't figure out how to do this with pointers
 }
 
@@ -37,7 +39,7 @@ void Game::printAsCommand(std::string text_input) {
 	std::cout << "\t>> " + text_input + " <<" << std::endl;
 }
 
-void Game::getInput(int type) {
+void Game::getInput(int type, Player p) {
 
 	//Different input menus for types.
 	// Type 0 is fishing/default
@@ -80,14 +82,18 @@ void Game::getInput(int type) {
 				} else
 				if (input == "") {
 					valid = true;
-					subheading = "1 fish caught!";
+					if(isSuccessful(rand()) == true){
+						p.do_fish();
+					}else{
+						p.do_battle();
+					}
+
+
 				} else
 				{
 					valid = false;
 					subheading = "Invalid input.";
 				}
-			} else (if type==1) {
-				// Code to do if player is in a battle encounter
 			}
 		} while (!valid);
 	} while (!exit);

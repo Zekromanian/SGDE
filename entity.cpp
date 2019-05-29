@@ -40,6 +40,11 @@ string Entity::get_name() {
   return name;
 }
 
+void Entity::get_stats(){
+  cout << "Name: " << name << endl;
+  cout << "   Health: " << hp << endl;
+}
+
 void Entity::set_health(int health) {
   hp = health;
 }

@@ -11,6 +11,7 @@ class Player : public Entity {
 	public:
 		//Constructors
 		Player();
+		Player(int h, string name,int power);
 		//Actions
 		void do_fish();
 		void do_battle();

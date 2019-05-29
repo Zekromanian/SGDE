@@ -21,6 +21,7 @@ class Entity {
         int get_health();
         string get_name();
         int get_strength();
+        void get_stats();
         //Set Value Methods
         void set_health(int health);
         void set_name(string title);
