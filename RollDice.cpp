@@ -16,7 +16,7 @@ int rollDie(int chanceBoost)
     return result;
 }
 
-int main()
+/*int main()
 {
     int chanceBoost = 100;
     for (int i = 0; i < 50; i++)
@@ -24,6 +24,8 @@ int main()
         cout << rollDie(chanceBoost) << endl;
     }
 }
+*/
+
 bool isSuccessful(int value)
 {
     //sets random seed so the result changes each time

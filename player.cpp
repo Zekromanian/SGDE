@@ -1,5 +1,7 @@
 #include "player.h"
-#include "RollDice.cpp"
+
+
+extern bool isSuccessful(int num);
 
 Player::Player(){
   int fish = 0;

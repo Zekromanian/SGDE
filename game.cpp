@@ -1,10 +1,12 @@
 #include "game.h"
 #include "entity.h"
 #include "player.h"
-#include "RollDice.cpp"
 #include <chrono>
 #include <thread>
 #include <stdlib.h>
+
+extern bool isSuccessful(int num);
+
 
 Game::Game() {
 
