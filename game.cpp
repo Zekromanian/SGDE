@@ -6,13 +6,17 @@
 #include <stdlib.h>
 
 extern bool isSuccessful(int num);
+int fish;
 
 Game::Game() {
+    
 
 	// Intro
 	system("clear");
 	printAsSpeech("Welcome to Extreme Fishing Simulator 2019");
 	printAsCommand("Please enter your name as a string.");
+    
+    
 
 	// Declaration of person entity
 	Player player(10,"Player",1);
@@ -21,8 +25,6 @@ Game::Game() {
 
 	// Running the game
 	getInput(0,player);
-	system("clear");
-	puts("You are dead");
 }
 
 // this was gonna type bit by bit if time worked but ceebs
@@ -39,6 +41,8 @@ void Game::printAsCommand(std::string text_input) {
 void Game::getInput(int type, Player p) {
 
 	Entity *creatures = new Entity[10];
+
+    fish = p.get_fish();
 
 	//Different input menus for types.
 	// Type 0 is fishing/default
@@ -77,6 +81,8 @@ void Game::getInput(int type, Player p) {
 					if(p.get_health()<=0) {
 							valid = true;
 							exit = true;
+                            system("clear");
+                            std::cout << "You are dead. You managed to catch " << p.get_fish() << " fish." << std::endl;
 					}
 					subheading = "Was hit by "+creatures[(p.get_fish()%9)].get_name();
 				} else
@@ -92,6 +98,8 @@ void Game::getInput(int type, Player p) {
 						if(p.get_health()<=0) {
 							valid = true;
 							exit = true;
+                            system("clear");
+                            std::cout << "You are dead. You managed to catch " << p.get_fish() << " fish." << std::endl;
 						}
 					}else{
 						p.do_battle();
@@ -99,6 +107,8 @@ void Game::getInput(int type, Player p) {
 						if(p.get_health()<=0) {
 							valid = true;
 							exit = true;
+                            system("clear");
+	                        std::cout << "You are dead. You managed to catch " << p.get_fish() << " fish." << std::endl;
 						}
 						subheading = "Was hit by "+creatures[(p.get_fish()%9)].get_name();
 					}
