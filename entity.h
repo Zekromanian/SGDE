@@ -11,6 +11,7 @@ class Entity {
         int hp;
         string name;
         int strength;
+        string *names;
     public:
         //Constructors
         Entity();

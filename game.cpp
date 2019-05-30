@@ -7,11 +7,10 @@
 
 extern bool isSuccessful(int num);
 
-
 Game::Game() {
 
 	// Intro
-	system("cls");
+	system("clear");
 	printAsSpeech("Welcome to Extreme Fishing Simulator 2019");
 	printAsCommand("Please enter your name as a string.");
 
@@ -19,20 +18,16 @@ Game::Game() {
 	Player player(10,"Player",1);
 	getline(std::cin, playername);
 	player.set_name(playername);
-	printAsSpeech(player.get_name());
+
+	// Running the game
 	getInput(0,player);
-	//couldn't figure out how to do this with pointers
+	system("clear");
+	puts("You are dead");
 }
 
 // this was gonna type bit by bit if time worked but ceebs
 void Game::printAsSpeech(std::string text_input) {
 	std::cout << std::endl << "\t";
-	//std::this_thread::sleep_for(std::chrono::milliseconds(300));
-	//std::cout << ".";
-	//std::this_thread::sleep_for(std::chrono::milliseconds(300));
-	//std::cout << ".";
-	//std::this_thread::sleep_for(std::chrono::milliseconds(300));
-	//std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 	std::cout << text_input << std::endl;
 }
 
@@ -42,6 +37,8 @@ void Game::printAsCommand(std::string text_input) {
 }
 
 void Game::getInput(int type, Player p) {
+
+	Entity *creatures = new Entity[10];
 
 	//Different input menus for types.
 	// Type 0 is fishing/default
@@ -54,13 +51,11 @@ void Game::getInput(int type, Player p) {
 
 	valid = false;
 	exit = false;
-	const char* subheading = "";
+	string subheading = "";
 	do {
 		do {
-
-			// Code to do if input type is 0 (fishing)
 			if(type == 0) {
-				system("cls");
+				system("clear");
 				printAsSpeech("You are on the jetty.\n");
 				puts("\n\t\t      \":\"");
 				puts("\t\t    ___:____     |\"\\/\"|");
@@ -70,13 +65,20 @@ void Game::getInput(int type, Player p) {
 				printAsCommand("ENTER = cast your fishing line.");
 				printAsCommand("b = Battle a ocean monster ");
 				printAsCommand("e = Exit game");
-				puts(subheading);
+				puts("\n");
+				p.get_stats();
+				std::cout << subheading << std::endl;
 				getline(std::cin, input);
 
-				if(input == "s") {
+				if(input == "b") {
 					valid = true;
-					subheading = "Your stats are good.";
-					// Get player stats
+					p.do_battle();
+					// Check if player is still alive
+					if(p.get_health()<=0) {
+							valid = true;
+							exit = true;
+					}
+					subheading = "Was hit by "+creatures[(p.get_fish()%9)].get_name();
 				} else
 				if (input == "e") {
 					valid = true;
@@ -84,13 +86,22 @@ void Game::getInput(int type, Player p) {
 				} else
 				if (input == "") {
 					valid = true;
-					if(isSuccessful(rand()) == true){
+					if(isSuccessful(1) == true){
 						p.do_fish();
+						subheading = "Caught a fish";
+						if(p.get_health()<=0) {
+							valid = true;
+							exit = true;
+						}
 					}else{
 						p.do_battle();
+						// Check if player is still alive
+						if(p.get_health()<=0) {
+							valid = true;
+							exit = true;
+						}
+						subheading = "Was hit by "+creatures[(p.get_fish()%9)].get_name();
 					}
-
-
 				} else
 				{
 					valid = false;

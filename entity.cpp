@@ -1,10 +1,28 @@
 #include "entity.h"
+extern int rollDie(int cb);
 
 Entity::Entity() {
   alive = true;
   hp = 10;
   name = "Angry Ocean Monster";
-  strength = 1;
+  strength = 1; 
+  names = new string[5];
+  names[0] = "Shark";
+  names[1] = "Goldfish";
+  names[2] = "Magikarp";
+  names[3] = "Boot";
+  names[4] = "Sponge";
+  if(rollDie(1) > 20) {
+    name = names[0];
+  } else if (rollDie(1) > 40) {
+    name = names[1];
+  } else if (rollDie(1) > 60) {
+    name = names[2];
+  } else if (rollDie(1) > 80) {
+    name = names[3];
+  } else {
+    name = names[4];
+  }
 }
 
 Entity::Entity(int health, string title, int power) {
